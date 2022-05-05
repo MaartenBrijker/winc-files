@@ -4,16 +4,16 @@ __human_name__ = "files"
 import os
 from zipfile import ZipFile
 
+PATH = os.path.join(os.getcwd(), 'cache')
+
 def clean_cache():
-    cwd = os.getcwd()
-    path = cwd + '/files/cache'
-    try: 
-        os.mkdir(path) 
-    except: 
-        for file_name in os.listdir(path):
-            file = path + '/' + file_name
+    if os.path.exists(PATH):
+        for file_name in os.listdir(PATH):
+            file = os.path.join(PATH, file_name)
             if os.path.isfile(file):
                 os.remove(file)  
+    else: 
+        os.mkdir(PATH) 
              
 def cache_zip(zip_path, cache_path):
     clean_cache()
@@ -21,13 +21,10 @@ def cache_zip(zip_path, cache_path):
         zipObj.extractall(path=cache_path)
 
 def cached_files():
-    cwd = os.getcwd()
-    path = cwd + '/files/cache'
-    abs_path = os.path.abspath(path)
-    if (os.path.exists(abs_path)):
+    if (os.path.exists(PATH)):
         all_files = []
-        for file_name in os.listdir(abs_path):
-            all_files.append(abs_path + '/' + file_name)
+        for file_name in os.listdir(PATH):
+            all_files.append(PATH + '/' + file_name)
         return all_files
 
 def find_password(list_of_files = cached_files()):
@@ -38,3 +35,7 @@ def find_password(list_of_files = cached_files()):
                 if (line[0] != '0'):
                     password = line[line.find(' ')+1:line.find('\\')]
                     return password
+
+# clean_cache()
+# cache_zip('data.zip', PATH)
+# print(find_password(cached_files()))
