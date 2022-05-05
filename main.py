@@ -36,6 +36,6 @@ def find_password(list_of_files = cached_files()):
                     password = line[line.find(' ')+1:line.find('\\')]
                     return password
 
-# clean_cache()
-# cache_zip('data.zip', PATH)
-# print(find_password(cached_files()))
+clean_cache()
+cache_zip('data.zip', PATH)
+print(find_password(cached_files()))
